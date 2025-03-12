@@ -1,3 +1,3 @@
 # Mapty Project
 
-Set your locations to be made
+Set your locations to be made.
