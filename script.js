@@ -1,6 +1,5 @@
-'use strict';
+"use strict"
 
-// ELEMENTS
 const form = document.querySelector('.form');
 const containerWorkouts = document.querySelector('.workouts');
 const inputType = document.querySelector('.form__input--type');
@@ -9,14 +8,10 @@ const inputDuration = document.querySelector('.form__input--duration');
 const inputCadence = document.querySelector('.form__input--cadence');
 const inputElevation = document.querySelector('.form__input--elevation');
 
-
-// FUNCTİONS
 const validİnputs = (...inputs) => inputs.every(inp => Number.isFinite(inp));
 const allPositive = (...inputs) => inputs.every(inp => inp > 0);
 
-
 //////////////////////////////////////////////////////////////////
-
 
 class Workout {
 
@@ -45,7 +40,6 @@ class Workout {
 
 }
 
-
 class Running extends Workout {
 
   type = "running";
@@ -64,7 +58,6 @@ class Running extends Workout {
   }
 
 }
-
 
 class Cycling extends Workout {
 
@@ -85,9 +78,7 @@ class Cycling extends Workout {
 
 }
 
-
 //////////////////////////////////////////////////////////////////
-
 
 class App {
 
@@ -122,22 +113,16 @@ class App {
     const longitude = position.coords.longitude;
     const coords = [latitude, longitude];
 
-
-    // LEAFLET LİBRARY
     this.#map = L.map('map').setView(coords, this.#mapZoomLevel);
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(this.#map);
 
-    // GET LOCALE STORAGE
     this.#workouts.forEach(work => {
       this._renderMarker(work);
     });
-    // ALGORİTMAYA GÖRE BAŞA ALIP RENDERMARKER METHODUNU TEKRAR KULLANDIK.
 
-
-    // İS CLİCK THE MAP
     this.#map.on('click', this._showForm.bind(this));
   }
 
@@ -171,8 +156,6 @@ class App {
   _newWorkout(element) {
     element.preventDefault();
 
-
-    // GET DATA FROM
     const type = inputType.value;
     const distance = +inputDistance.value;
     const duration = +inputDuration.value;
@@ -182,7 +165,6 @@ class App {
     const latlng = [lat, lng];
     let workout;
 
-    // İF WORKOUT RUNNİNG CREATE RUNNİNG OBJECT
     if (type === 'running') {
       const cadence = +inputCadence.value;
 
@@ -192,8 +174,6 @@ class App {
       workout = new Running(latlng, distance, duration, cadence);
     }
 
-
-    // İF WORKOUT CYCLİNG CREATE CYCLİNG OBJECT
     if (type === 'cycling') {
       const elevGain = +inputElevation.value;
 
@@ -203,19 +183,14 @@ class App {
       workout = new Cycling(latlng, distance, duration, elevGain);
     }
 
-    // ADD NEW OBJECT WORKOUT AREA
     this.#workouts.push(workout);
 
-    // RENDER MAP
     this._renderMarker(workout);
 
-    // RENDER WORKOUT ON WORKOUT AREA
     this._renderWorkout(workout);
 
-    // HİDE FORM + CLEAR PLACEHOLDER
     this._hideForm();
 
-    // SET LOCALE STORAGE
     this._setLocaleStorage();
   }
 
@@ -302,9 +277,6 @@ class App {
         duration: 1,
       },
     });
-
-    // workout._click();
-
   }
 
   _setLocaleStorage() {
@@ -330,8 +302,6 @@ class App {
 
 }
 
-
 //////////////////////////////////////////////////////////////////
-
 
 const app = new App();
